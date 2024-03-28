@@ -1,0 +1,4 @@
+keystrokes.csv
+app/output/*
+app/build
+.DS_Store
