@@ -15,7 +15,7 @@ public class TemporalHierarchy {
     // idxInLastSnapshot[i] contains the index in the last snapshot (last edit)
     // for the character currently at index i. -1 if the character was just
     // inserted.
-    private List<Integer> idxInLastSnapshot = new ArrayList<>();
+    public List<Integer> idxInLastSnapshot = new ArrayList<>();
     private List<List<Integer>> allIdxInLastSnapshot = new ArrayList<>();
 
     // idxInLastCompilable[i] contains the index in the last compilable snapshot
@@ -32,7 +32,7 @@ public class TemporalHierarchy {
         // Setup
         final List<Integer> inserted = new ArrayList<>(Collections.nCopies(insertText.length(), -1));
 
-        // Set indicies for the array: [0, 1, 2, 3, ...]
+        // Set indices for the array: [0, 1, 2, 3, ...]
         for (int index = 0; index < this.idxInLastSnapshot.size(); ++index) {
             this.idxInLastSnapshot.set(index, index);
         }
@@ -49,6 +49,11 @@ public class TemporalHierarchy {
         this.idxInLastSnapshot = new ArrayList<>(this.idxInLastSnapshot);
         this.allIdxInLastSnapshot.add(new ArrayList<>(this.idxInLastSnapshot));
         this.allIdxInLastCompilable.add(new ArrayList<>(this.idxInLastSnapshot));
+
+        // Debug code
+//        this.idxInLastSnapshot
+
+
 
 //        if (treeNumber >= 10 && treeNumber <= 15) {
 //            int sn = this.allIdxInLastSnapshot.size();
@@ -205,6 +210,9 @@ public class TemporalHierarchy {
         // If no tparent was set but it has previous coordinates then it is likely commented out
         // in the previous tree. Iterate back until we either end up with -1 coordinates or find
         // a tparent.
+        // As we go backwards in time, k and l both refer to previous compilable snapshots. k is
+        // the index into the trees list, which has entries only for compilable snapshots, and l
+        // is the index into the allIdxInLastCompilable list, which has entries for every snapshot.
         int k = -1;
         int l = -1;
         while (trees.size() >= -k && cur.tparent == null && !cur.label.equals("RootContext") && curStartInPrevCoords > -1) {
@@ -216,7 +224,14 @@ public class TemporalHierarchy {
             while (l >= -allCompilable.size() && !allCompilable.get(allCompilable.size()+l)) {
                 l -= 1;
             }
-            indices = prev_start_end(curStartInPrevCoords, curEndInPrevCoords, allIdxInLastCompilable.get(allIdxInLastCompilable.size()+l), codeStates.get(codeStates.size()+l));
+            int lll = l-1;
+            while (lll >= -allCompilable.size() && !allCompilable.get(allCompilable.size()+lll)) {
+                lll -= 1;
+            }
+            String lastCompilableSrc = codeStates.get(codeStates.size()+lll);
+            indices = prev_start_end(curStartInPrevCoords, curEndInPrevCoords,
+                    allIdxInLastCompilable.get(allIdxInLastCompilable.size()+l),
+                    lastCompilableSrc);
             curStartInPrevCoords = indices[0];
             curEndInPrevCoords = indices[1];
             if (trees.size() >= -k) {

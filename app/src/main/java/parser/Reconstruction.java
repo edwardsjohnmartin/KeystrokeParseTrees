@@ -52,6 +52,11 @@ public class Reconstruction {
             this.codeStates.add(state);
 
             this.createCorrespondance(i, insertText, deleteText);
+            // Debug
+//            System.out.println(this.trees.size());
+//            if (this.trees.size() == 1470) {
+//                Trees.outputGraphViz(this.trees.subList(this.trees.size()-1, this.trees.size()), "output/debug.dot");
+//            }
         }
     }
 

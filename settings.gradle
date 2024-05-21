@@ -8,4 +8,4 @@
  */
 
 rootProject.name = 'parser'
-include(':App')
+include('app')

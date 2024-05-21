@@ -136,6 +136,7 @@ public class App {
             fn = "src/main/resources/keystrokes_quoted.csv";
 //            fn = "/Users/edwards/projects/KeystrokeDatasets/2021/keystrokes.csv";
             k = "Student3_Assign12_task3.py";
+//            k = "Student1_Assign6_flukytester.py";
         }
         final String fileName = fn;
         final String key = k;
@@ -146,9 +147,9 @@ public class App {
 //        System.out.println("\nUnique keys in file: " + keys.size());
 //        System.out.println("\n");
         System.out.println(dataframe.stringColumn("Key").unique());
-        for (String k2:dataframe.stringColumn("Key").unique()) {
-            System.out.println(k2);
-        }
+//        for (String k2:dataframe.stringColumn("Key").unique()) {
+//            System.out.println(k2);
+//        }
 
         Table selection = ts.selectTask(dataframe, key);
         Reconstruction reconstruction = new Reconstruction(selection);

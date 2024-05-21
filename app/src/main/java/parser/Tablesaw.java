@@ -14,32 +14,32 @@ import tech.tablesaw.selection.Selection;
 
 public class Tablesaw {
 
-    public void test() throws InterruptedException {
-        final String fileName = "src/main/resources/keystrokes.csv";
-        Table dataframe = this.readFile(fileName);
-        this.printHeaders(dataframe);
-
-        List<String> keys = this.createKeys(dataframe);
-        System.out.println("\nUnique keys in file: " + keys.size());
-
-        long startTime = System.currentTimeMillis();
-        ArrayList<Thread> threads = new ArrayList<>();
-        for (String key : keys) {
-            Table selection = this.selectTask(dataframe, key);
-
-            @SuppressWarnings("preview")
-            Thread thread = Thread.startVirtualThread(new MyRunnable(selection, key));
-            threads.add(thread);
-        }
-
-        for (Thread thread : threads) {
-            thread.join();
-        }
-
-        long endTime = System.currentTimeMillis();
-
-        System.out.println("That took " + (endTime - startTime) + " milliseconds");
-    }
+//    public void test() throws InterruptedException {
+//        final String fileName = "src/main/resources/keystrokes.csv";
+//        Table dataframe = this.readFile(fileName);
+//        this.printHeaders(dataframe);
+//
+//        List<String> keys = this.createKeys(dataframe);
+//        System.out.println("\nUnique keys in file: " + keys.size());
+//
+//        long startTime = System.currentTimeMillis();
+//        ArrayList<Thread> threads = new ArrayList<>();
+//        for (String key : keys) {
+//            Table selection = this.selectTask(dataframe, key);
+//
+//            @SuppressWarnings("preview")
+//            Thread thread = Thread.startVirtualThread(new MyRunnable(selection, key));
+//            threads.add(thread);
+//        }
+//
+//        for (Thread thread : threads) {
+//            thread.join();
+//        }
+//
+//        long endTime = System.currentTimeMillis();
+//
+//        System.out.println("That took " + (endTime - startTime) + " milliseconds");
+//    }
 
     public Table readFile(final String fileName) {
         ColumnType[] types = {
